@@ -8,11 +8,11 @@ Yandex::Direct::API::JSON - communication with Yandex Direct JSON API.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Moose;
 use LWP::UserAgent;
@@ -28,7 +28,7 @@ BEGIN {
 has 'api_url' => (
     is       => 'ro',
     isa      => 'Str',
-    default  => 'https://soap.direct.yandex.ru/json-api/v3/',
+    default  => 'https://soap.direct.yandex.ru/json-api/v4/',
     required => 1,
 );
 
@@ -103,14 +103,106 @@ has 'max_logged_response_length' => (
 );
 
 
+=head2 get_supported_methods
+
+Returns list of supported API methods.
+
+=cut
+sub get_supported_methods {
+    return (
+        # Финансы
+        'CreateInvoice',
+        'GetCreditLimits',
+        'PayCampaigns',
+        'TransferMoney',
+
+        # Статистика кампании
+        'CreateNewReport',
+        'DeleteReport',
+        'GetReportList',
+        'GetStatGoals',
+        'GetSummaryStat',
+
+        # Ключевые слова
+        'CreateNewWordstatReport',
+        'DeleteWordstatReport',
+        'GetKeywordsSuggestion',
+        'GetWordstatReport',
+        'GetWordstatReportList',
+
+        # Прогноз бюджета
+        'CreateNewForecast',
+        'DeleteForecastReport',
+        'GetForecast',
+        'GetForecastList',
+
+        # Кампании
+        'CreateOrUpdateCampaign',
+        'GetBalance',
+        'GetCampaignParams',
+        'GetCampaignsList',
+        'GetCampaignsListFilter',
+        'GetCampaignsParams',
+
+        # Объявления и фразы
+        'CreateOrUpdateBanners',
+        'GetBanners',
+        'GetBannerPhrases',
+        'GetBannerPhrasesFilter',
+
+        # Цены за клик
+        'SetAutoPrice',
+        'UpdatePrices',
+
+        # Состяние кампаний
+        'ArchiveCampaign',
+        'DeleteCampaign',
+        'ResumeCampaign',
+        'StopCampaign',
+        'UnArchiveCampaign',
+
+        # Состояние объявлений
+        'ArchiveBanners',
+        'DeleteBanners',
+        'ModerateBanners',
+        'ResumeBanners',
+        'StopBanners',
+        'UnArchiveBanners',
+
+        # Клиенты
+        'CreateNewSubclient',
+        'GetClientInfo',
+        'GetClientsList',
+        'GetClientsUnits',
+        'GetSubClients',
+        'UpdateClientInfo',
+
+        # Яндекс.Каталог и регионы
+        'GetRegions',
+        'GetRubrics',
+
+        # Прочие методы
+        'GetAvailableVersions',
+        'GetChanges',
+        'GetTimeZones',
+        'GetVersion',
+        'PingAPI',
+    );
+};
+
+for my $method ( __PACKAGE__->get_supported_methods ) {
+    __PACKAGE__->meta->add_method(
+        $method => sub { shift->request( { method => $method, param => shift } ) }
+    );
+}
 
 =head1 SYNOPSIS
 
     use Yandex::Direct::API::JSON;
 
     my $direct = Yandex::Direct::API::JSON->new(
-        api_url       => 'https://soap.direct.yandex.ru/json-api/v3/
-        ssl_cert_file => '/etc/pki/tls/certs/yandex_direct_cert.pem', 
+        api_url       => 'https://soap.direct.yandex.ru/json-api/v4/
+        ssl_cert_file => '/etc/pki/tls/certs/yandex_direct_cert.pem',
         ssl_key_file  => '/etc/pki/tls/private/yandex_direct_key.pem',
         api_locale    => 'ru',
     );

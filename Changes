@@ -3,3 +3,7 @@ Revision history for Yandex-Direct-API-JSON
 0.01    2011-05-06 20:20
         - We can send request()'s!
 
+0.02    2011-06-16
+        - Changed API version to 4
+        - Added all API v4 methods (wrappers around request)
+        - Updated example script for using new API method

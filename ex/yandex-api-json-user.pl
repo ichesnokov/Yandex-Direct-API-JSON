@@ -25,10 +25,8 @@ my $direct = Yandex::Direct::API::JSON->new(
 );
 
 
-my $keywords_ref = $direct->request({
-    method => 'GetKeywordsSuggestion',
-    param  => { Keywords => [ "тойота" ],  }, }
-)->{data};
+my $keywords_ref
+    = $direct->GetKeywordsSuggestion( { Keywords => [ "тойота" ] } )->{data};
 
 for my $phrase ( @{ $keywords_ref } ) {
     utf8::encode($phrase);
