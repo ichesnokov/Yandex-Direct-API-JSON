@@ -2,7 +2,6 @@ use inc::Module::Install;
 
 name     'Yandex-Direct-API-JSON';
 all_from 'lib/Yandex/Direct/API/JSON.pm';
-author   q{Ilya Chesnokov <chesnokov.ilya@gmail.com>};
 license  'perl';
 
 build_requires 'Test::More';

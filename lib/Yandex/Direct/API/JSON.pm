@@ -261,7 +261,7 @@ sub request {
 
 =head1 AUTHOR
 
-Ilya Chesnokov, C<< <chesnokov.ilya at gmail.com> >>
+Ilya Chesnokov, <chesnokov.ilya@gmail.com>
 
 =head1 BUGS
 
